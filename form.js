@@ -1,83 +1,84 @@
 (function () {
-  var disabledForm = document.querySelectorAll('fieldset');
+  let disabledForm = document.querySelectorAll('fieldset');
 
-for (let i = 0; i < disabledForm.length; i++) {
-  disabledForm[i].setAttribute('disabled','')
-}
+  for (let i = 0; i < disabledForm.length; i++) {
+    disabledForm[i].setAttribute('disabled','')
+  }
 
-var map = document.querySelector('.map');
-var mapPins = map.querySelector('.map__pins');
-var mapPinMain = document.querySelector('.map__pin--main');
+  let map = document.querySelector('.map');
+  let mapPins = map.querySelector('.map__pins');
+  let mapPinMain = document.querySelector('.map__pin--main');
 
-mapPinMain.addEventListener('mousedown', function (evt) {
-  evt.preventDefault();
+  mapPinMain.addEventListener('mousedown', function (evt) {
+    evt.preventDefault();
   
-  var mapPinsCurtain = document.querySelectorAll('.map__pinCurtain');
-  window.mapPinPostedAd = document.querySelectorAll('.map__pinPostedAd');
-  var mapCardCurtain = document.querySelectorAll('.map__cardCurtain');
-  var popupClose = document.querySelectorAll('.popup__close');
-  map.classList.remove('map--faded');
-
-for (let i = 0; i < mapPinsCurtain.length; i++) {
-  mapPinsCurtain[i].classList.remove('map__pinCurtain');
-}
-
-var notice = document.querySelector('.notice').childNodes[3];
-  notice.classList.remove('notice__form--disabled');
-
-for (let i = 0; i < disabledForm.length; i++) {
-  disabledForm[i].removeAttribute('disabled','')
-}
-
-disabledForm[3].childNodes[3].value = `${mapPinMain.offsetLeft}, ${mapPinMain.offsetTop}`;
-
-for (let i = 0; i < mapPinPostedAd.length; i++) {
+    let mapPinsCurtain = document.querySelectorAll('.map__pinCurtain');
+    window.mapPinPostedAd = document.querySelectorAll('.map__pinPostedAd');
+    let mapCardCurtain = document.querySelectorAll('.map__cardCurtain');
+    let popupClose = document.querySelectorAll('.popup__close');
+    map.classList.remove('map--faded');
   
-  mapPinPostedAd[i].addEventListener('click', function() {
-    mapCardCurtain[i].classList.remove('map__cardCurtain');
-  })
+    for (let i = 0; i < mapPinsCurtain.length; i++) {
+      mapPinsCurtain[i].classList.remove('map__pinCurtain');
+    
 
-  popupClose[i].addEventListener('click', function() { 
-    mapCardCurtain[i].classList.add('map__cardCurtain');
-  })
-};
+      let notice = document.querySelector('.notice').childNodes[3];
+      notice.classList.remove('notice__form--disabled');
 
-var startCoords = {
-  x: evt.pageX, 
-  y: evt.pageY
-}
+      for (let i = 0; i < disabledForm.length; i++) {
+        disabledForm[i].removeAttribute('disabled','')
+      }
 
-var dragged = false;
+      disabledForm[3].childNodes[3].value = `${mapPinMain.offsetLeft}, ${mapPinMain.offsetTop}`;
 
-var onMouseMove = function (moveEvt) {
-moveEvt.preventDefault();
-dragged = true;
+      for (let i = 0; i < mapPinPostedAd.length; i++) {
+  
+        mapPinPostedAd[i].addEventListener('click', function() {
+         mapCardCurtain[i].classList.remove('map__cardCurtain');
+        })
 
-var shift = {
-  x: startCoords.x - moveEvt.pageX,
-  y: startCoords.y - moveEvt.pageY
-}
+        popupClose[i].addEventListener('click', function() { 
+         mapCardCurtain[i].classList.add('map__cardCurtain');
+        })
+      };
 
-startCoords = {
-  x: moveEvt.pageX,
-  y: moveEvt.pageY 
-}
+      let startCoords = {
+        x: evt.pageX, 
+        y: evt.pageY
+      }
 
-mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
-mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
+      let dragged = false;
 
-};
+      let onMouseMove = function (moveEvt) {
+        moveEvt.preventDefault();
+        dragged = true;
 
-var onMouseUp = function (upEvt) {
-upEvt.preventDefault();
+        let shift = {
+          x: startCoords.x - moveEvt.pageX,
+          y: startCoords.y - moveEvt.pageY
+        }
 
-mapPins.removeEventListener('mousemove', onMouseMove);
-mapPins.removeEventListener('mouseup', onMouseUp);
+        startCoords = {
+          x: moveEvt.pageX,
+          y: moveEvt.pageY 
+        }
 
-disabledForm[3].childNodes[3].value = `${mapPinMain.offsetLeft}, ${mapPinMain.offsetTop}`;
-};
+        mapPinMain.style.top = (mapPinMain.offsetTop - shift.y) + 'px';
+        mapPinMain.style.left = (mapPinMain.offsetLeft - shift.x) + 'px';
 
-mapPins.addEventListener('mousemove', onMouseMove);
-mapPins.addEventListener('mouseup', onMouseUp);
-});
+      };
+
+      let onMouseUp = function (upEvt) {
+        upEvt.preventDefault();
+
+        mapPins.removeEventListener('mousemove', onMouseMove);
+        mapPins.removeEventListener('mouseup', onMouseUp);
+
+        disabledForm[3].childNodes[3].value = `${mapPinMain.offsetLeft}, ${mapPinMain.offsetTop}`;
+      };
+
+      mapPins.addEventListener('mousemove', onMouseMove);
+      mapPins.addEventListener('mouseup', onMouseUp);
+    }
+  });
 })();
