@@ -23,9 +23,9 @@
   
       if (ads.offer.rooms === 1) {
         clonedMapCardTemplate.querySelectorAll('p')[2].textContent = ads.offer.rooms + ' комната для ' + ads.offer.guests + ' гостей';
-      } else if (ads.offer.rooms > 1 && ads.offer.rooms <= 4) {
+      } else if (ads.offer.rooms >= 2 && ads.offer.rooms <= 4) {
         clonedMapCardTemplate.querySelectorAll('p')[2].textContent = ads.offer.rooms + ' комнаты для ' + ads.offer.guests + ' гостей';
-      } else if (ads.offer.rooms > 1 && ads.offer.rooms > 5) {
+      } else if (ads.offer.rooms >= 5) {
         clonedMapCardTemplate.querySelectorAll('p')[2].textContent = ads.offer.rooms + ' комнат для ' + ads.offer.guests + ' гостей';
       }
 
