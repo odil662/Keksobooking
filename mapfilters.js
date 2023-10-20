@@ -26,14 +26,26 @@
                 window.mapPinPostedAd[index].classList.add('map__pinCurtain')
             }
 
+            function isAdApproachByType (type) {
+                if (filters.typeFilter === 'any') {
+                    return true
+                }
+                if (filters.typeFilter !== 'any') {
+                    if (type !== filters.typeFilter) return false
+                    else return true
+                }
+            }
+
             function filterByType () {
                 for (let i = 0; i < ads.length; i++) {
-                   if (ads[i].offer.type !== filters.typeFilter) hideAd(i)
-                   if (filters.typeFilter === 'any') showAd(i)
+                    if (!isAdApproachByType(ads[i].offer.type)) hideAd(i)
                 }
             }
 
             const isAdApproachByPrice = (price) => { 
+                if (filters.priceFilter === 'any') {
+                    return true
+                }
                 if (filters.priceFilter === 'low') {
                     if (price > 10000) return false
                     else return true
@@ -50,13 +62,14 @@
  
             function filterByPrice () {
                 for (let i = 0; i < ads.length; i++) {
-                        let ad = ads[i];
-                        if (!isAdApproachByPrice(ad.offer.price)) hideAd(i)
-                        if (filters.priceFilter === 'any') showAd(i)
+                        if (!isAdApproachByPrice(ads[i].offer.price)) hideAd(i)
                     }
             }
 
             function isAdApproachByRooms(rooms) {
+                if (filters.roomsFilter === 'any') {
+                    return true
+                }
                 if (filters.roomsFilter === '1' || filters.roomsFilter === '2' 
                 || filters.roomsFilter === '3' || filters.roomsFilter === '4') {
                     if (rooms !== Number(filters.roomsFilter)) return false
@@ -75,7 +88,9 @@
             }
 
             function isAdApproachByGuests(guests) {
-            
+                if (filters.guestFilter === 'any') {
+                    return true
+                }
                 if (filters.guestFilter === '1' || filters.guestFilter === '2') {
                     if (guests !== Number(filters.guestFilter)) return false
                     else return true
@@ -123,16 +138,17 @@
 
             function filterHandler () {
                 showAllAds()
-                filterByType();
-                filterByPrice();
-                // filterByRooms()
-                // filterByGuests()
-                // filterByFeatures()
+                filterByType()
+                filterByPrice()
+                filterByRooms()
+                filterByGuests()
+                filterByFeatures()
             }
 
             mapFilters.childNodes[1].addEventListener('change', function () {
                 filters.typeFilter = mapFilters.childNodes[1].value;
                 filterHandler();
+                console.log(filters.typeFilter)
             });
             
             mapFilters.childNodes[3].addEventListener('change', function() {
