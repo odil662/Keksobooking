@@ -16,286 +16,138 @@
                 washer: false,
                 elevator: false,
                 conditioner: false 
-            }; 
+            };
+
+            const showAd = (index) => {
+                window.mapPinPostedAd[index].classList.remove('map__pinCurtain')
+            }
+            
+            const hideAd = (index) =>  {
+                window.mapPinPostedAd[index].classList.add('map__pinCurtain')
+            }
 
             function filterByType () {
                 for (let i = 0; i < ads.length; i++) {
-                    let ad = ads[i];
-                    ad.offer.type === filters.typeFilter ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') 
-                    : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                }
-            };
-
-            function checkPriceByType () {
-                for (let i = 0; i < ads.length; i++) {
-                    let ad = ads[i];
-                    if (filters.priceFilter === 'middle' && filters.typeFilter !== 'any') {
-                        ad.offer.type === filters.typeFilter && ad.offer.price >= 10000 && ad.offer.price <= 50000 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.priceFilter === 'low' && filters.typeFilter !== 'any') {
-                        ad.offer.type === filters.typeFilter && ad.offer.price <= 10000 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.priceFilter === 'high' && filters.typeFilter !== 'any') {
-                        ad.offer.type === filters.typeFilter && ad.offer.price > 50000 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
+                   if (ads[i].offer.type !== filters.typeFilter) hideAd(i)
+                   if (filters.typeFilter === 'any') showAd(i)
                 }
             }
 
+            const isAdApproachByPrice = (price) => { 
+                if (filters.priceFilter === 'low') {
+                    if (price > 10000) return false
+                    else return true
+                }
+                if (filters.priceFilter === 'middle') {
+                    if (price < 10000 || price > 50000) return false
+                    else return true
+                }
+                if (filters.priceFilter === 'high') {
+                    if (price < 50000) return false
+                    else return true
+                }
+            }
+ 
             function filterByPrice () {
                 for (let i = 0; i < ads.length; i++) {
                         let ad = ads[i];
-                        if (filters.priceFilter === 'middle') {
-                            ad.offer.price >= 10000 && ad.offer.price <= 50000 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') 
-                            : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                        } else if (filters.priceFilter === 'low') {
-                            ad.offer.price <= 10000 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') 
-                            : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                        } else if (filters.priceFilter === 'high') {
-                            ad.offer.price > 50000 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') 
-                            : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                        }
+                        if (!isAdApproachByPrice(ad.offer.price)) hideAd(i)
+                        if (filters.priceFilter === 'any') showAd(i)
                     }
             }
 
-            function priceNumberPerString (numb) {
-                if (numb < 10000) {
-                   numb = 'low';
-                } else if (numb >= 10000 && numb <= 50000) {
-                    numb = 'middle';
-                } else if (numb > 50000) {
-                    numb = 'high';
-                }
-                return numb;
-            }
-            
-            function checkRoomsByPriceByType () {
-                for (let i = 0; i < ads.length; i++) {
-                    let ad = ads[i];
-                    if (filters.roomsFilter === '1' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 1 && ad.offer.type === filters.typeFilter && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '1' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        ad.offer.rooms === 1 && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '1' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 1 && ad.offer.type === filters.typeFilter  
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                    
-                    if (filters.roomsFilter === '2' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 2 && ad.offer.type === filters.typeFilter && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '2' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        ad.offer.rooms === 2 && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '2' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 2 && ad.offer.type === filters.typeFilter  
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                    
-                    if (filters.roomsFilter === '3' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 3 && ad.offer.type === filters.typeFilter && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '3' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        ad.offer.rooms === 3 && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '3' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 3 && ad.offer.type === filters.typeFilter  
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-
-                    if (filters.roomsFilter === '4' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 4 && ad.offer.type === filters.typeFilter && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '4' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        ad.offer.rooms === 4 && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '4' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms === 4 && ad.offer.type === filters.typeFilter  
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-
-                    if (filters.roomsFilter === '5' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms >= 5 && ad.offer.type === filters.typeFilter && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '5' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        ad.offer.rooms >= 5 && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '5' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        ad.offer.rooms >= 5 && ad.offer.type === filters.typeFilter  
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                }
+            function isAdApproachByRooms(rooms) {
+                if (filters.roomsFilter === '1' || filters.roomsFilter === '2' 
+                || filters.roomsFilter === '3' || filters.roomsFilter === '4') {
+                    if (rooms !== Number(filters.roomsFilter)) return false
+                    else return true
+                } 
+                if (filters.roomsFilter === '5') {
+                    if (rooms < 5) return false
+                    else return true
+                } 
             }
 
             function filterByRooms () {
                 for (let i = 0; i < ads.length; i++) {
-                    let ad = ads[i];
-                    if (filters.roomsFilter === '1') {
-                        ad.offer.rooms === 1 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '2') {
-                        ad.offer.rooms === 2 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '3') {
-                        ad.offer.rooms === 3 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '4') {
-                        ad.offer.rooms === 4 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.roomsFilter === '5') {
-                        ad.offer.rooms >= 5 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } 
-                     
+                    if (!isAdApproachByRooms(ads[i].offer.rooms)) hideAd(i)
                 }
             }
 
-            function stringPerNumber (str) {
-                return Number(str);
-            } 
-
-            function checkGuestsByRoomsByPriceByType () {
-                for (let i = 0; i < ads.length; i++) {
-                    let ad = ads[i];
-                    if (filters.roomsFilter !== 'any' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6)
-                        && (ad.offer.rooms === stringPerNumber(filters.roomsFilter) || ad.offer.rooms > 5 && stringPerNumber(filters.roomsFilter) === 5)
-                        && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        && ad.offer.type === filters.typeFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-
-                    if (filters.roomsFilter === 'any' && filters.priceFilter !== 'any' && filters.typeFilter !== 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6)   
-                        && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        && ad.offer.type === filters.typeFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-    
-                    if (filters.roomsFilter !== 'any' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6)
-                        && (ad.offer.rooms === stringPerNumber(filters.roomsFilter) || ad.offer.rooms > 5 && stringPerNumber(filters.roomsFilter) === 5) 
-                        && ad.offer.type === filters.typeFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                    
-                    if (filters.roomsFilter !== 'any' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6)
-                        && (ad.offer.rooms === stringPerNumber(filters.roomsFilter) || ad.offer.rooms > 5 && stringPerNumber(filters.roomsFilter) === 5)
-                        && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                    
-                    if (filters.roomsFilter !== 'any' && filters.priceFilter === 'any' && filters.typeFilter === 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6)
-                        && (ad.offer.rooms === stringPerNumber(filters.roomsFilter) || ad.offer.rooms > 5 && stringPerNumber(filters.roomsFilter) === 5)
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                    
-                    if (filters.roomsFilter === 'any' && filters.priceFilter === 'any' && filters.typeFilter !== 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6) 
-                        && ad.offer.type === filters.typeFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                    
-                    if (filters.roomsFilter === 'any' && filters.priceFilter !== 'any' && filters.typeFilter === 'any') {
-                        (ad.offer.guests === stringPerNumber(filters.guestFilter) && ad.offer.guests <= 2 
-                        || ad.offer.guests >= 3 && ad.offer.guests <= 5 && stringPerNumber(filters.guestFilter) === 5
-                        || ad.offer.guests > 6 && stringPerNumber(filters.guestFilter) === 6) 
-                        && priceNumberPerString(ad.offer.price) === filters.priceFilter 
-                        ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    }
-                }
+            function isAdApproachByGuests(guests) {
+            
+                if (filters.guestFilter === '1' || filters.guestFilter === '2') {
+                    if (guests !== Number(filters.guestFilter)) return false
+                    else return true
+                } 
+                if (filters.guestFilter === '5') {
+                    if (guests < 3 || guests > 5) return false
+                    else return true
+                } 
+                if (filters.guestFilter === '6') {
+                    if (guests < 6) return false
+                    else return true
+                } 
             }
 
             function filterByGuests () {
                 for (let i = 0; i < ads.length; i++) {
-                    let ad = ads[i];
-                     if (filters.guestFilter === '1') {
-                        ad.offer.guests === 1 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.guestFilter === '2') {
-                        ad.offer.guests === 2 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.guestFilter === '5') {
-                        ad.offer.guests > 2 && ad.offer.guests <= 5 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } else if (filters.guestFilter === '5+') {
-                        ad.offer.guests > 5 ? window.mapPinPostedAd[i].classList.remove('map__pinCurtain') : window.mapPinPostedAd[i].classList.add('map__pinCurtain');
-                    } 
+                     if (!isAdApproachByGuests(ads[i].offer.guests)) hideAd(i)
+                }
+            }
+
+            const isAdApproachByFeatures = (arr) => {
+                if (arr === undefined) return false 
+                const filterObj = {}
+                const list = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner']
+                list.forEach(value => {
+                    filterObj[value] = filters[value]
+                })
+                for (let key in filterObj) {
+                    if (filterObj[key] && !arr.includes(key)) return false
+                }
+                return true
+            }
+            
+            const filterByFeatures = () => {
+                for (let i = 0; i < ads.length; i++) {
+                    if (!isAdApproachByFeatures(ads[i].offer.features)) hideAd(i)
+                }
+            }
+
+            const showAllAds = () => {
+                for (let i = 0; i < ads.length; i++) {
+                    showAd(i)
                 }
             }
 
             function filterHandler () {
-                
-                if (filters.typeFilter === 'any' 
-                && filters.priceFilter === 'any' 
-                && filters.roomsFilter === 'any'
-                && filters.guestFilter === 'any'
-                && filters.wifi === false
-                && filters.dishwasher === false
-                && filters.parking === false
-                && filters.washer === false
-                && filters.elevator === false
-                && filters.conditioner === false) {
-                    
-                    for (let i = 0; i < ads.length; i++) {
-                      window.mapPinPostedAd[i].classList.remove('map__pinCurtain');
-                    }
-                }
-                
-
-                if (filters.typeFilter !== 'any') {
-                    filterByType();
-                }
-
-                if (filters.priceFilter !== 'any') {
-                    filters.typeFilter !== 'any' ? checkPriceByType() : filterByPrice();
-                }
-
-                if (filters.roomsFilter !== 'any') {
-                    filters.typeFilter !== 'any' || filters.priceFilter !== 'any' ? checkRoomsByPriceByType() : filterByRooms();
-                }
-
-                if (filters.guestFilter !== 'any') {
-                    filters.typeFilter !== 'any' || filters.priceFilter !== 'any' || filters.roomsFilter !== 'any' 
-                    ? checkGuestsByRoomsByPriceByType() : filterByGuests();
-                }
+                showAllAds()
+                filterByType();
+                filterByPrice();
+                // filterByRooms()
+                // filterByGuests()
+                // filterByFeatures()
             }
-            
 
             mapFilters.childNodes[1].addEventListener('change', function () {
                 filters.typeFilter = mapFilters.childNodes[1].value;
                 filterHandler();
-               
-                console.log(filters);
             });
             
             mapFilters.childNodes[3].addEventListener('change', function() {
                 filters.priceFilter = mapFilters.childNodes[3].value;
                 filterHandler();
-               
-                console.log(filters);
             });
 
             mapFilters.childNodes[5].addEventListener('change', function() {
                 filters.roomsFilter = mapFilters.childNodes[5].value;
                 filterHandler();
-               
-                console.log(filters);
             });
 
             mapFilters.childNodes[7].addEventListener('change', function() {
                 filters.guestFilter = mapFilters.childNodes[7].value;
                 filterHandler();
-              
-                console.log(filters);
             });
 
             mapFilters.childNodes[9].addEventListener('change', function() {
@@ -305,41 +157,7 @@
                 filters.washer = mapFilterSet.childNodes[13].checked;
                 filters.elevator = mapFilterSet.childNodes[17].checked;
                 filters.conditioner = mapFilterSet.childNodes[21].checked;
-                
-                // let features = [];
-
-                // function addFeatures(item) {
-                //     features.push(item);
-                // }
-
-                // if (filters.wifi) {
-                //     addFeatures("wifi");
-                // }
-                // if (filters.dishwasher) {
-                //     addFeatures("dishwasher");
-                // }
-                // if (filters.parking) {
-                //     addFeatures("parking");
-                // }
-                // if (filters.washer) {
-                //     addFeatures("washer");
-                // }
-                // if (filters.elevator) {
-                //     addFeatures("elevator");
-                // }
-                // if (filters.conditioner) {
-                //     addFeatures("conditioner");
-                // }
-                // console.log(features)
-                // for (let i = 0; i < ads.length; i++) {
-                //     var ad = ads[i];
-                //     for (let j of features) {
-                //      if (ad.offer.features[j] === features[j]) {
-                //         console.log('yes');
-                //      }
-                //     } 
-                // }
-            console.log(filters);
+                filterHandler();
             });
     } 
     filter();
