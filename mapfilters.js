@@ -148,7 +148,6 @@
             mapFilters.childNodes[1].addEventListener('change', function () {
                 filters.typeFilter = mapFilters.childNodes[1].value;
                 filterHandler();
-                console.log(filters.typeFilter)
             });
             
             mapFilters.childNodes[3].addEventListener('change', function() {
