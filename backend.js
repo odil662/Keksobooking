@@ -7,7 +7,6 @@
         };
 
         let onLoad = function (data) {
-            console.log(data);
             callback(data);
         };
 
