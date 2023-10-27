@@ -16,7 +16,7 @@
                 washer: false,
                 elevator: false,
                 conditioner: false 
-            };
+            }
 
             const showAd = (index) => {
                 window.mapPinPostedAd[index].classList.remove('map__pinCurtain')
