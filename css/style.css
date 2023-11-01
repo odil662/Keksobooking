@@ -527,6 +527,25 @@ textarea:focus {
   vertical-align: middle;
 }
 
+.form__photo-preview  {
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 0 20px 0;   
+}
+
+.form__photo-preview li {
+  width: 33.3%;
+  display: block;
+  float: left;
+  line-height: 0;
+}
+
+.form__photo-preview img {
+  width: 70px;
+  height: 70px;;
+}
+
 .notice__header {
   width: 100%;
   padding-bottom: 20px;
@@ -600,9 +619,15 @@ textarea:focus {
   left: -900em;
 }
 
-.notice__form .upload {
+.notice__form .upload__avatar {
   display: flex;
+  align-items: center;
+  min-height: 70px;
+}
 
+.notice__form .upload__photo {
+  display: flex;
+  align-items: center;
   min-height: 70px;
 }
 
@@ -611,28 +636,50 @@ textarea:focus {
   margin-left: 20px;
 }
 
-.notice__form .drop-zone {
+.notice__form .drop-zone-avatar {
   color: #999;
   border: dashed 1px #c7c7c7;
-  border-radius: 5px;
+  border-radius: 10px;
+  margin: 10px;
+  margin-left: 10px;
   text-align: center;
   height: 70px;
+  width: 130px;
   font-size: 14px;
   box-sizing: border-box;
   padding: 10px 10px 5px;
 }
 
-.notice__form .drop-zone:hover {
+.notice__form .drop-zone-avatar:hover {
+  color: #ff5635;
+}
+
+.notice__form .drop-zone-photo {
+  color: #999;
+  border: dashed 1px #c7c7c7;
+  border-radius: 10px;
+  margin: 10px;
+  margin-left: 100px;
+  text-align: center;
+  height: 40px;
+  width: 280px;
+  font-size: 14px;
+  box-sizing: border-box;
+  padding: 10px 10px 5px;
+}
+
+.notice__form .drop-zone-photo:hover {
   color: #ff5635;
 }
 
 .form__photo-container {
-  width: 140px;
+  height: 70px;
+  font-size: 14px;
 }
 
 .form__element--submit {
   width: 100%;
-  padding: 40px 0;
+  padding: 10px 0;
   text-align: center;
 }
 
