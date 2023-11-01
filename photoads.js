@@ -1,9 +1,9 @@
 (function () {
     const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
     let uploadAvatar = document.querySelector('.notice__photo');
-    let avatarPreview = document.querySelector('.notice__preview');
+    window.avatarPreview = document.querySelector('.notice__preview');
     let uploadPhoto = document.querySelector('.form__photo-container');
-    let photoPreview = document.querySelector('.form__photo-preview'); 
+    window.photoPreview = document.querySelector('.form__photo-preview'); 
 
     let matches = function (name) {
         FILE_TYPES.some(function (it) {
@@ -19,7 +19,7 @@
         if (matches) {
             let reader = new FileReader();
             reader.addEventListener('load', function () {
-                avatarPreview.childNodes[1].src = reader.result;
+                window.avatarPreview.childNodes[1].src = reader.result;
             })
 
             reader.readAsDataURL(file);
@@ -31,8 +31,8 @@
       
         for (let i = 0; i < file.length; i++) {
             let liCreate = document.createElement('li');
-            let liAdd = photoPreview.appendChild(liCreate);
-            let liPhotoPreview = photoPreview.querySelectorAll('li');
+            let liAdd = window.photoPreview.appendChild(liCreate);
+            let liPhotoPreview = window.photoPreview.querySelectorAll('li');
 
             let imgCreate = document.createElement('img');
             let liChildAdd = liPhotoPreview[i].appendChild(imgCreate);
