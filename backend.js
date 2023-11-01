@@ -68,13 +68,34 @@
     }
 
     let form = document.querySelector('.notice__form');
+    let formSubmit = form.querySelector('.form__submit');
+    let formReset = form.querySelector('.form__reset')
 
-    form.addEventListener('submit', function (evt) {
-    
+    let liRemove = function (li) {
+        while (li.firstChild) {
+            li.removeChild(li.firstChild);
+          }
+    }
+
+    let resetAvatar = function () {
+     window.avatarPreview.childNodes[1].setAttribute('src', 'img/muffin.png');
+    }
+
+    formSubmit.addEventListener('click', function (evt) {
+        evt.preventDefault();
+       
         window.upload(new FormData(form), function (response) {
             form.reset();
+            resetAvatar();
+            liRemove(window.photoPreview);
         });
+        
+    })
 
+    formReset.addEventListener('click', function (evt) {
         evt.preventDefault();
+        form.reset();
+        resetAvatar();
+        liRemove(window.photoPreview);
     })
 })()
