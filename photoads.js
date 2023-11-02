@@ -32,17 +32,22 @@
         for (let i = 0; i < file.length; i++) {
             let liCreate = document.createElement('li');
             let liAdd = window.photoPreview.appendChild(liCreate);
-            let liPhotoPreview = window.photoPreview.querySelectorAll('li');
 
-            let imgCreate = document.createElement('img');
-            let liChildAdd = liPhotoPreview[i].appendChild(imgCreate);
+            let liPhotoPreview = window.photoPreview.querySelectorAll('li');
+            
             let fileName = file[i].name.toLowerCase();
             matches(fileName)
            
             if (matches) {
                 let reader = new FileReader();
                 reader.addEventListener('load', function () {
-                    liPhotoPreview[i].childNodes[0].setAttribute('src', `${reader.result}`);
+                    for (let j = 0; j < liPhotoPreview.length; j++) {
+                        if (liPhotoPreview[j].childNodes.length === 0) {
+                            let imgCreate = document.createElement('img');
+                            let liChildAdd = liPhotoPreview[j].appendChild(imgCreate);
+                            liPhotoPreview[j].childNodes[0].src = reader.result;
+                        }             
+                    }
                 })
 
                 reader.readAsDataURL(file[i]);
